@@ -7,11 +7,15 @@ const jwt = require("jsonwebtoken");
 // how do we connect to the database from here?
 const { Client } = require("pg");
 
-const client = new Client({
-  database: "twitter",
-  password: "postgres",
-  user: "postgres",
-});
+const client = new Client(
+  process.env.NODE_ENV === "dev"
+    ? {
+        database: "twitter",
+        password: "postgres",
+        user: "postgres",
+      }
+    : process.env.DB_URL
+);
 
 client.connect();
 
